@@ -8,17 +8,19 @@
 makeCacheMatrix <- function(x = matrix()) {
     i <- NULL
     
+    ## instead of assuming we got a square matrix, do a quick check
     if (nrow(x) != ncol(x)) {
         message("Input matrix must be a square one")
         return()
     }
-    ## define set function
+    
+    ## define set function (nulls out the inverse)
     set <- function(y) {
         x <<- y
         i <<- NULL  ## clear the inverse
     }
     
-    ## define get function
+    ## define get function 
     get <- function() x   ## return what you have
 
     setinverse <- function(solve) i <<- solve  ## apply solve fintion to calculate inverse
@@ -31,7 +33,9 @@ makeCacheMatrix <- function(x = matrix()) {
          getinverse = getinverse)
 }
 
-## Write a short comment describing this function
+## cachesolve gets a function/environmentlist based on matrix
+## and returns a cached inverse of the original matrix if available
+## or a freshly calculated one
 cacheSolve <- function(x, ...) {
     inv <- x$getinverse()
     if(!is.null(inv)) {
@@ -46,5 +50,3 @@ cacheSolve <- function(x, ...) {
     
     inv
 }
-
-
